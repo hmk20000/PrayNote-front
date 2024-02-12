@@ -4,7 +4,7 @@ import { prayType } from "../type/prayType";
 const usePutPray = () => {
   const queryClient = useQueryClient();
   const putPray = async (pray: prayType) => {
-    const res = await fetch("/api/pray/", {
+    const res = await fetch("/api/pray/" + pray.prayId, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(pray),
@@ -13,27 +13,27 @@ const usePutPray = () => {
   };
 
   return useMutation(async (pray: prayType) => putPray(pray), {
-    onMutate: async (newPray) => {
-      await queryClient.cancelQueries(["prayQuery"]);
+    // onMutate: async (newPray) => {
+    //   await queryClient.cancelQueries(["prayQuery"]);
 
-      const oldPray = queryClient.getQueryData(["prayQuery"]);
+    //   const oldPray = queryClient.getQueryData(["prayQuery"]);
 
-      queryClient.setQueryData(["prayQuery"], newPray);
+    //   queryClient.setQueryData(["prayQuery"], newPray);
 
-      return { oldPray, newPray };
-    },
-    onError: (_err, _newPray, context) => {
-      queryClient.setQueryData(["prayQuery"], context?.oldPray);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries(["prayQuery"]);
-    },
-    // onSuccess: () => {
+    //   return { oldPray, newPray };
+    // },
+    // onError: (_err, _newPray, context) => {
+    //   queryClient.setQueryData(["prayQuery"], context?.oldPray);
+    // },
+    // onSettled: () => {
     //   queryClient.invalidateQueries(["prayQuery"]);
     // },
-    // onError: (error: any) => {
-    //   throw error;
-    // },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["prayQuery"]);
+    },
+    onError: (error: any) => {
+      throw error;
+    },
   });
 };
 

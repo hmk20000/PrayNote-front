@@ -10,7 +10,7 @@ const useGetPray = () => {
   };
   const { isLoading } = useQuery(["prayQuery"], () => getPrayAll(), {
     onSuccess: (data) => {
-      setPrayData(data);
+      setPrayData(data.reverse());
     },
   });
 

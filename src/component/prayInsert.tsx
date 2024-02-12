@@ -1,4 +1,4 @@
-import { prayPacket, prayType } from "../type/prayType";
+import { prayPacket } from "../type/prayType";
 import usePostPray from "../hook/usePostPray";
 import { useForm } from "react-hook-form";
 

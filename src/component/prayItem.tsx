@@ -4,8 +4,7 @@ import useDeletePray from "../hook/useDeletePray";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 import { useForm } from "react-hook-form";
 import usePutPray from "../hook/usePutPray";
-import useDebounce from "../hook/useDebounce";
-import { useState } from "react";
+import debounce from "../util/debounce";
 
 const Container = styled.li`
   width: 100%;
@@ -43,8 +42,7 @@ interface prayItemProps {
 const PrayItem: React.ComponentClass<SortableElementProps & prayItemProps> =
   SortableElement(({ pray }: prayItemProps) => {
     const deletePrayMutate = useDeletePray();
-    // const updatePrayMutate = usePutPray();
-    const [rtn, setRtn] = useState<prayPacket>();
+    const updatePrayMutate = usePutPray();
     const { register, handleSubmit } = useForm<prayPacket>({
       mode: "onChange",
       defaultValues: { title: pray.title, state: pray.state },
@@ -52,12 +50,16 @@ const PrayItem: React.ComponentClass<SortableElementProps & prayItemProps> =
     const onClick = () => {
       deletePrayMutate.mutateAsync(pray.prayId);
     };
-    const onSubmit = (data: prayPacket) => {
-      // updatePrayMutate.mutateAsync(data);
+
+    const onChange = (data: prayPacket) => {
+      console.log(data);
+      const packet = { ...pray, title: data.title };
+      updatePrayMutate.mutateAsync(packet);
     };
+    const debouncedChange = debounce<typeof onChange>(onChange, 1000);
     return (
       <Container>
-        <form onChange={handleSubmit(onSubmit)}>
+        <form onChange={handleSubmit(debouncedChange)}>
           <ID>{pray.prayId}</ID>
           <Title {...register("title")} />
         </form>

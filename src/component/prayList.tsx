@@ -4,6 +4,11 @@ import { prayType } from "../type/prayType";
 import PrayItem from "./prayItem";
 import { arrayMoveImmutable } from "array-move";
 import usePutPray from "../hook/usePutPrays";
+import styled from "styled-components";
+
+const UL = styled.ul`
+  padding: 0;
+`;
 
 interface prayListProps {
   prays: prayType[];
@@ -12,11 +17,11 @@ interface prayListProps {
 const Container: React.ComponentClass<SortableContainerProps & prayListProps> =
   SortableContainer(({ prays }: prayListProps) => {
     return (
-      <ul>
+      <UL>
         {prays.map((pray: prayType, i: number) => (
           <PrayItem pray={pray} index={i} key={pray.prayId} />
         ))}
-      </ul>
+      </UL>
     );
   });
 

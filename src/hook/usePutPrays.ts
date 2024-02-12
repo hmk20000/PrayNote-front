@@ -7,7 +7,7 @@ const usePutPrays = () => {
     const res = await fetch("/api/pray/", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(prays),
+      body: JSON.stringify(prays.reverse()),
     });
     return res.json();
   };
