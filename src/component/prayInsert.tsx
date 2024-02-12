@@ -1,6 +1,11 @@
 import { prayPacket } from "../type/prayType";
 import usePostPray from "../hook/usePostPray";
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
+
+const Container = styled.form`
+  margin-bottom: 12px;
+`;
 
 // interface prayInsertProps {
 //   prays: prayType[];
@@ -21,7 +26,7 @@ const PrayInsert = () => {
     reset();
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Container onSubmit={handleSubmit(onSubmit)}>
       <input
         {...register("title", { minLength: { value: 1, message: "error" } })}
       />
@@ -30,7 +35,7 @@ const PrayInsert = () => {
         {...register("state", { minLength: { value: 1, message: "error" } })}
       />
       <button type="submit">확인</button>
-    </form>
+    </Container>
   );
 };
 

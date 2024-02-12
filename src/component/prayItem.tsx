@@ -10,31 +10,49 @@ const Container = styled.li`
   width: 100%;
   border: 1px solid gray;
   border-radius: 12px;
-  padding: 10px;
   box-sizing: border-box;
   position: relative;
   background-color: white;
   list-style: none;
-  margin: 0;
+  margin-bottom: 12px;
+  padding: 4px;
+`;
+const Form = styled.form`
   display: flex;
   flex-direction: row;
 `;
 const DeleteBtn = styled.button`
-  width: 12px;
+  /* width: 12px;
   position: absolute;
   right: 10px;
-  top: 0px;
+  top: 0px; */
+  border: 0;
+  background-color: #ffa048;
+  border-radius: 12px;
+  width: 40px;
+  cursor: pointer;
+  &:hover {
+    background-color: #be7026;
+  }
 `;
-const ID = styled.div`
+const Handle = styled.div`
   font-size: 10px;
-  background-color: #9c9c9c;
+  background: url("/menu.svg");
+  background-size: cover;
+  /* background-color: #9c9c9c; */
   color: white;
   width: 16px;
   height: 16px;
   text-align: center;
-  border-radius: 100%;
+  /* border-radius: 12px; */
+  margin: 12px;
+  cursor: pointer;
 `;
-const Title = styled.input``;
+const Title = styled.textarea`
+  border: 0;
+  margin-left: 12px;
+  flex-grow: 1;
+`;
 
 interface prayItemProps {
   pray: prayType;
@@ -59,17 +77,17 @@ const PrayItem: React.ComponentClass<SortableElementProps & prayItemProps> =
     const debouncedChange = debounce<typeof onChange>(onChange, 1000);
     return (
       <Container>
-        <form onChange={handleSubmit(debouncedChange)}>
-          <ID>{pray.prayId}</ID>
+        <Form onChange={handleSubmit(debouncedChange)}>
+          <Handle></Handle>
           <Title {...register("title")} />
-        </form>
-        <DeleteBtn
-          onClick={() => {
-            onClick();
-          }}
-        >
-          X
-        </DeleteBtn>
+          <DeleteBtn
+            onClick={() => {
+              onClick();
+            }}
+          >
+            X
+          </DeleteBtn>
+        </Form>
       </Container>
     );
   });

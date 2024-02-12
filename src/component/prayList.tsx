@@ -8,6 +8,7 @@ import styled from "styled-components";
 
 const UL = styled.ul`
   padding: 0;
+  margin: 0;
 `;
 
 interface prayListProps {
